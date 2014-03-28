@@ -1,0 +1,25 @@
+  *******************************************
+  *                                         *
+  *        W E L C O M E  to  R O O T       *
+  *                                         *
+  *   Version   5.32/00   2 December 2011   *
+  *                                         *
+  *  You are welcome to visit our Web site  *
+  *          http://root.cern.ch            *
+  *                                         *
+  *******************************************
+
+ROOT 5.32/00 (branches/v5-32-00-patches@42372, Sep 22 2012, 10:24:00 on linuxx8664gcc)
+
+CINT/ROOT C/C++ Interpreter version 5.18.00, July 2, 2010
+Type ? for help. Commands must be C++ statements.
+Enclose multiple statements between { }.
+
+Processing apply_selectPairs52X.1.2.C...
+...filled !
+Plotting Z mass peaks...
+...plotted !
+Plotting maps
+plotted
+Info in <TCanvas::SaveSource>: C++ Macro file: /home/llr/cms/ndaci/SKWork/macro/skEfficiency/tagAndProbe/EfficiencyStudy/Study2012/Run2012D_PRV1_up/g_effi_map_EG15.C has been generated
+DONE

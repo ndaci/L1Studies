@@ -1,0 +1,3 @@
+for((i=0;i<67;i++)) do python /home/llr/cms/ndaci/SKWork/macro/skEfficiency/analyzers/tagAndProbe/GEN/generator_SingEle53.py $i 67 /home/llr/cms/ndaci/SKWork/macro/skEfficiency/tagAndProbe/EfficiencyStudy/Study2012/Run2012D_PRV1_up/ /data_CMS/cms/ndaci/ndaci_2012/SingleElectron/Update/Run2012D_PRV1_up/Elepairs/ Run2012D_PRV1_up produceNtuple/eIDSimpleTree 9 2011A false makePairs52X.1.3.2_C.so > submit_$i.C ; mv submit_$i.C macros ; done
+
+for((i=0;i<67;i++)) do python /home/llr/cms/ndaci/SKWork/macro/skEfficiency/analyzers/tagAndProbe/GEN/generateScript53.py $PWD/ submit_$i.C > submit_$i.sh ; chmod u+x submit_$i.sh ; done
