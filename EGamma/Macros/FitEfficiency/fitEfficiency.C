@@ -41,6 +41,7 @@
 
 // Personal headers
 #include "FuncCB.h"
+#include "../Common/tdrstyle.h"
 
 using namespace RooFit ;
 
@@ -62,7 +63,7 @@ void loadPresentationStyle()
   gStyle->SetPadRightMargin(0.15);
   gStyle->SetHistLineWidth(2);
 
-  gROOT->ProcessLine(".L ../Common/tdrstyle.C");
+  //gROOT->ProcessLine(".L ../Common/tdrstyle.C");
   gROOT->ProcessLine("setTDRStyle()");
 }
 
