@@ -64,7 +64,8 @@ void loadPresentationStyle()
   gStyle->SetHistLineWidth(2);
 
   //gROOT->ProcessLine(".L ../Common/tdrstyle.C");
-  gROOT->ProcessLine("setTDRStyle()");
+  //gROOT->ProcessLine("setTDRStyle()");
+  setTDRStyle();
 }
 
 void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, int iColl2,
@@ -209,20 +210,20 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   cut2.defineType("reject",0) ;
   
   // PARAMETRES ROOFIT CRYSTAL BALL
-  RooRealVar norm("norm","N",0.999738,0.6,1);
-  RooRealVar alpha("alpha","#alpha",0.591932,0.01,8);
-  RooRealVar n("n","n",3.93246,1.1,35);
-  RooRealVar mean("mean","mean",20.6992,0,100);
+  RooRealVar norm("norm","N",1,0.6,1);
+  RooRealVar alpha("alpha","#alpha",0.671034,0.01,8);
+  RooRealVar n("n","n",4.07846,1.1,35);
+  RooRealVar mean("mean","mean",20.8,0,100);
   //mean.setVal(thres[iEG]);
-  RooRealVar sigma("sigma","#sigma",0.890846,0.01,5);
+  RooRealVar sigma("sigma","#sigma",0.972825,0.01,5);
   //RooRealVar pedestal("pedestal","pedestal",0.01,0,0.4);
 
-  RooRealVar norm2("norm2","N",0.996544,0.6,1);
-  RooRealVar alpha2("alpha2","#alpha",1.48082,0.01,8);
-  RooRealVar n2("n2","n",16.0776,1.1,35);
-  RooRealVar mean2("mean2","mean",22.2195,0,100);
+  RooRealVar norm2("norm2","N",0.999069,0.6,1);
+  RooRealVar alpha2("alpha2","#alpha",0.492303,0.01,8);
+  RooRealVar n2("n2","n",11.6694,1.1,35);
+  RooRealVar mean2("mean2","mean",21.4582,0,100);
   //mean2.setVal(thres[iEG]);
-  RooRealVar sigma2("sigma2","#sigma",2.10164,0.01,5);
+  RooRealVar sigma2("sigma2","#sigma",1.19,0.01,5);
   //RooRealVar pedestal2("pedestal2","pedestal",0.01,0,0.4);
 
   FuncCB cb("cb","Crystal Ball Integree",et_plot,mean,sigma,alpha,n,norm) ;
