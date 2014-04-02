@@ -1,0 +1,23 @@
+{
+
+  gROOT->ProcessLine(".L ../../FitEfficiency/FuncCB_cxx.so");
+
+  gROOT->ProcessLine(".L ../../FitEfficiency/fitEfficiency_tau_C.so");
+
+  float thres=20, iECAL1=0, iColl1=0, iECAL2=0, iColl2=0;
+  int nCPU=4;
+  TString lumi="200 pb" ;
+  TString cutdef="";
+
+  //TString dirIn = "/data_CMS/cms/ndaci/ndaci_2012/HTauTau/TriggerStudy/SingleMu/MuMu/Run2012A_PRV1/Pairs/" ;
+  TString dirIn = "/data_CMS/cms/ndaci/ndaci_2012/HTauTau/TriggerStudy/SingleMu/MuTau/Run2012B_PRV1_2/PairsLooseTau//";
+  TString dirResults = "/home/llr/cms/ndaci/SKWork/macro/HTauTau/results/TriggerStudies/MuTau/LooseTau/Run2012B_PRV1_2/" ;
+  
+  fitEfficiency( thres,  iECAL1,  iColl1,  iECAL2,  iColl2,
+		 cutdef,
+		 dirIn, dirResults, lumi,  nCPU, 
+		 kBlack, kFullCircle, kRed, kOpenSquare,
+		 "",  "", "/*.root");
+
+  //gROOT->ProcessLine(".q");
+}
