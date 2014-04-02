@@ -84,13 +84,13 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   double thres[nEG];
   for(int i=0 ; i<nEG ; i++) thres[i]=i;
 
-  TString names[nEG];
-  ostringstream ossi;
-  for(int i=0;i<(int)nEG;i++) {
-    ossi.str("");
-    ossi << thres[i] ;
-    names[i] = ossi.str();
-  }
+  //TString names[nEG];
+  //ostringstream ossi;
+  //for(int i=0;i<(int)nEG;i++) {
+  //  ossi.str("");
+  //  ossi << thres[i] ;
+  //  names[i] = ossi.str();
+  //}
 
   // NAMES //
   const int nECAL=2;
@@ -112,9 +112,16 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   
   // ===
 
-  TString dirResults = dirIn + "/turnons/EG"+names[iEG]+"/" ;
+  //TString dirResults = dirIn + "/turnons/EG"+names[iEG]+"/" ;
+  
+  TString dirResults = dirIn + "/turnons/EG20/" ;
+  
+  //TString name_image = 
+    //dirResults + "eff_EG"+names[iEG]+"_tag"+tag+"_probe"+probe+name_ecal[iECAL1]+name_coll[iColl1]+"_vs"+name_ecal[iECAL2]+name_coll[iColl2] ;
+
   TString name_image = 
-    dirResults + "eff_EG"+names[iEG]+"_tag"+tag+"_probe"+probe+name_ecal[iECAL1]+name_coll[iColl1]+"_vs"+name_ecal[iECAL2]+name_coll[iColl2] ;
+    dirResults + "eff_EG20_tag"+tag+"_probe"+probe+name_ecal[iECAL1]+name_coll[iColl1]+"_vs"+name_ecal[iECAL2]+name_coll[iColl2] ;
+
 
   // Output log //
   ofstream fichier(name_image+".txt", ios::out);
@@ -271,8 +278,11 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   //RooDataSet dataSet("data","data",RooArgSet(et_plot, cut,dr),Import(*treenew)); 
   //RooDataSet dataSet2("data2","data2",RooArgSet(et_plot2, cut2,dr2),Import(*treenew_2));
   
-  RooDataSet dataSet( "data", "data", RooArgSet(et_plot,  cut), Import(*treenew));
-  RooDataSet dataSet2("data2","data2",RooArgSet(et_plot2, cut2),Import(*treenew_2));
+  
+  TString etacut[nECAL]={ "probe_offl_eta>-1.305 && probe_offl_eta<1.305" , "probe_offl_eta<=-1.479 || probe_offl_eta>=1.479" } ;
+  
+  RooDataSet dataSet( "data", "data", RooArgSet(et_plot,  cut), Import(*treenew), Cut(etacut[iECAL1]) );
+  RooDataSet dataSet2( "data2", "data2", RooArgSet(et_plot2,  cut2), Import(*treenew_2), Cut(etacut[iECAL2]) );
 
   dataSet.Print();
   dataSet2.Print();
@@ -281,8 +291,8 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   RooPlot* frame = et_plot.frame(Bins(18000),Title("Fitted efficiency")) ;
   RooPlot* frame2 = et_plot2.frame(Bins(18000),Title("Fitted efficiency")) ;
 
-  dataSet.plotOn(frame, Binning(binning), Efficiency(cut), MarkerColor(color1), LineColor(color1), MarkerStyle(style1) );
-  dataSet2.plotOn(frame2, Binning(binning), Efficiency(cut2), MarkerColor(color2), LineColor(color2), MarkerStyle(style2) );
+  //dataSet.plotOn(frame, Binning(binning), Efficiency(cut), MarkerColor(color1), LineColor(color1), MarkerStyle(style1) );
+  //dataSet2.plotOn(frame2, Binning(binning), Efficiency(cut2), MarkerColor(color2), LineColor(color2), MarkerStyle(style2) );
 
 
   /////////////////////// FITTING /////////////////////////////
@@ -297,7 +307,7 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   RooFitResult* roofitres2 = new RooFitResult("roofitres2","roofitres2");
 
   fichier << "Fit characteristics :"   << endl ;
-  fichier << "EG "     << names[iEG] << endl ;
+  //fichier << "EG "     << names[iEG] << endl ;
   fichier << "Fit Range , EB Coll : [" << fit_cuts_min << "," << fit_cuts_max << "]" << endl ;
   fichier << "Fit Range , EE Coll : [" << fit_cuts_min << "," << fit_cuts_max << "]" << endl ;
   fichier << "----------------------"  << endl ;
@@ -404,7 +414,8 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   leg->SetShadowColor(kWhite);
   leg->SetFillColor(kWhite);
   leg->SetMargin(0.25);
-  TLegendEntry *entry=leg->AddEntry("NULL","L1_SingleEG"+names[iEG],"h");
+//TLegendEntry *entry=leg->AddEntry("NULL","L1_SingleEG"+names[iEG],"h");
+  TLegendEntry *entry=leg->AddEntry("NULL","L1_SingleEG20","h");
 //   leg->AddEntry(SCeta1,name_leg_ecal[iECAL1]+" "+name_leg_coll[iColl1],"p");
 //   leg->AddEntry(SCeta2,name_leg_ecal[iECAL2]+" "+name_leg_coll[iColl2],"p");
   leg->AddEntry(SCeta1,name_leg_ecal[iECAL1],"p");
@@ -422,7 +433,8 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   leg->SetFillStyle(0);
   leg->AddEntry("NULL","CMS Preliminary 2012 pp  #sqrt{s}=8 TeV","h");
   leg->AddEntry("NULL","#int L dt = "+lumi+"^{-1}","h");
-  leg->AddEntry("NULL","Threshold : "+names[iEG]+" GeV","h");
+  leg->AddEntry("NULL","Threshold : 20 GeV","h");
+  //leg->AddEntry("NULL","Threshold : "+names[iEG]+" GeV","h");
   leg->Draw();
 
   TPaveText *pt2 = new TPaveText(0.220,0.605,0.487,0.685,"brNDC"); // mid : x=353.5                                          
