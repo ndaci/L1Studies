@@ -99,8 +99,18 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   TString name_leg_ecal[nECAL] = {"Barrel","Endcaps"};
   TString name_leg_coll[nColl] = {"Online","Emulation"};  
 
-  TString name_ecal[nECAL] = {"_EB","_EE"};
+  TString name_ecal[nECAL] = {"_BARREL","_ENDCAP"};
   TString name_coll[nColl] = {"_N","_M"};
+  
+  // ===
+  
+  const int nalgo=2;
+  const int nthreshold = 2;
+  
+  TString name_algo[nalgo]      = {"Run1","newAlgo"};
+  TString threshold[nthreshold] = {10,20,25,30,40};
+  
+  // ===
 
   TString dirResults = dirIn + "/turnons/EG"+names[iEG]+"/" ;
   TString name_image = 
@@ -188,18 +198,42 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   treenew_2 = (TTree*) gDirectory->Get( "treenew"+name_ecal[iECAL2]+name_coll[iColl2] ) ;
 
   TString name_scet[2], name_scdr[2], name_l1bin[2];
-  name_scet[0] = "sc_et"+name_ecal[iECAL1]+name_coll[iColl1];
-  name_scet[1] = "sc_et"+name_ecal[iECAL2]+name_coll[iColl2];
-  name_scdr[0] = "sc_dr"+name_ecal[iECAL1]+name_coll[iColl1];
-  name_scdr[1] = "sc_dr"+name_ecal[iECAL2]+name_coll[iColl2];
   
-  name_l1bin[0] = "l1_"+names[iEG]+name_ecal[iECAL1]+name_coll[iColl1];
-  name_l1bin[1] = "l1_"+names[iEG]+name_ecal[iECAL2]+name_coll[iColl2];
+  //name_scet[0] = "sc_et"+name_ecal[iECAL1]+name_coll[iColl1];
+  //name_scet[1] = "sc_et"+name_ecal[iECAL2]+name_coll[iColl2];
+  //name_scdr[0] = "sc_dr"+name_ecal[iECAL1]+name_coll[iColl1];
+  //name_scdr[1] = "sc_dr"+name_ecal[iECAL2]+name_coll[iColl2];
+  
+  // ===
+  
+  TString name_scet = "probe_offl_et";
+  TString name_scpt = "probe_offl_pt";
+  
+  
+  // ===
+  
+  //name_l1bin[0] = "l1_"+names[iEG]+name_ecal[iECAL1]+name_coll[iColl1];
+  //name_l1bin[1] = "l1_"+names[iEG]+name_ecal[iECAL2]+name_coll[iColl2];
+  
+  // ===
+  
+  name_l1bin[0] = name_algo[iColl1] + "_Matched_" + threshold[iEG]  + name_ecal[iECAL1]
+  name_l1bin[1] = name_algo[iColl2] + "_Matched_" + threshold[iEG]  + name_ecal[iECAL2]
+  
+  //{Run1,newAlgo}_Matched_{threshold}_{BARREL,ENDCAP}
+  //threshold = {10,20,25,30,40}
+  
+  //===
 
-  RooRealVar et_plot(name_scet[0],name_scet[0],0,150) ;
-  RooRealVar dr(name_scdr[0],name_scdr[0],0.5,1.5) ; 
-  RooRealVar et_plot2(name_scet[1],name_scet[1],0,150) ;
-  RooRealVar dr2(name_scdr[1],name_scdr[1],0.5,1.5) ;
+  //RooRealVar et_plot(name_scet[0],name_scet[0],0,150) ;
+  //RooRealVar dr(name_scdr[0],name_scdr[0],0.5,1.5) ; 
+  //RooRealVar et_plot2(name_scet[1],name_scet[1],0,150) ;
+  //RooRealVar dr2(name_scdr[1],name_scdr[1],0.5,1.5) ;
+  
+  RooRealVar et_plot(name_scet,name_scet,0,150) ;
+  //RooRealVar dr(name_scdr,name_scdr,0.5,1.5) ; 
+  RooRealVar et_plot2(name_scet,name_scet,0,150) ;
+  //RooRealVar dr2(name_scdr[1],name_scdr[1],0.5,1.5) ;
 
   // Acceptance state cut (1 or 0)
   RooCategory cut(name_l1bin[0],name_l1bin[0]) ;
@@ -234,8 +268,11 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   RooEfficiency eff2("eff2","efficiency",cb2,cut2,"accept");
 
   // DATASETS //
-  RooDataSet dataSet("data","data",RooArgSet(et_plot, cut,dr),Import(*treenew)); 
-  RooDataSet dataSet2("data2","data2",RooArgSet(et_plot2, cut2,dr2),Import(*treenew_2));
+  //RooDataSet dataSet("data","data",RooArgSet(et_plot, cut,dr),Import(*treenew)); 
+  //RooDataSet dataSet2("data2","data2",RooArgSet(et_plot2, cut2,dr2),Import(*treenew_2));
+  
+  RooDataSet dataSet( "data", "data", RooArgSet(et_plot,  cut), Import(*treenew));
+  RooDataSet dataSet2("data2","data2",RooArgSet(et_plot2, cut2),Import(*treenew_2));
 
   dataSet.Print();
   dataSet2.Print();
