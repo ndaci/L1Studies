@@ -105,10 +105,10 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   // ===
   
   const int nalgo=2;
-  const int nthreshold = 2;
+  const int nthreshold = 5;
   
   TString name_algo[nalgo]      = {"Run1","newAlgo"};
-  TString threshold[nthreshold] = {10,20,25,30,40};
+  TString threshold[nthreshold] = {"10","20","25","30","40"};
   
   // ===
 
@@ -206,7 +206,7 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   
   // ===
   
-  TString name_scet = "probe_offl_et";
+  TString name_scetX = "probe_offl_et";
   TString name_scpt = "probe_offl_pt";
   
   
@@ -217,8 +217,8 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   
   // ===
   
-  name_l1bin[0] = name_algo[iColl1] + "_Matched_" + threshold[iEG]  + name_ecal[iECAL1]
-  name_l1bin[1] = name_algo[iColl2] + "_Matched_" + threshold[iEG]  + name_ecal[iECAL2]
+  name_l1bin[0] = name_algo[iColl1] + "_Matched_" + threshold[iEG]  + name_ecal[iECAL1];
+  name_l1bin[1] = name_algo[iColl2] + "_Matched_" + threshold[iEG]  + name_ecal[iECAL2];
   
   //{Run1,newAlgo}_Matched_{threshold}_{BARREL,ENDCAP}
   //threshold = {10,20,25,30,40}
@@ -230,9 +230,9 @@ void fastEfficiencyNadir(unsigned int iEG, int iECAL1, int iColl1, int iECAL2, i
   //RooRealVar et_plot2(name_scet[1],name_scet[1],0,150) ;
   //RooRealVar dr2(name_scdr[1],name_scdr[1],0.5,1.5) ;
   
-  RooRealVar et_plot(name_scet,name_scet,0,150) ;
+  RooRealVar et_plot(name_scetX,name_scetX,0,150) ;
   //RooRealVar dr(name_scdr,name_scdr,0.5,1.5) ; 
-  RooRealVar et_plot2(name_scet,name_scet,0,150) ;
+  RooRealVar et_plot2(name_scetX,name_scetX,0,150) ;
   //RooRealVar dr2(name_scdr[1],name_scdr[1],0.5,1.5) ;
 
   // Acceptance state cut (1 or 0)
